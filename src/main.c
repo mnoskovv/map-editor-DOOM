@@ -30,6 +30,7 @@ int	main(int argc, char **argv)
 		exit_error(2);
 	all->scale = (all->w > all->h) ? SCR_H / all->w : SCR_H / all->h;
 	all->half_step = (all->scale + 20) / 2;
+	app->player = NULL;
 	all->zoom = 1;
 	all->move = 0;
 	create_list_points(all);

@@ -58,6 +58,18 @@ void	set_render(t_all *all, t_points *start)
 	SDL_RenderPresent(all->rend);
 }
 
+bool on_wall(int x_mouse,int y_mouse,t_all *all)
+{
+
+
+    return (true);
+}
+
+void    put_player(int x_mouse,int y_mouse,t_all *all, t_points *start)
+{
+    if (on_wall(x_mouse, y_mouse, all, start) == false)
+        
+}
 void	general_draw(t_all *all, t_points *start)
 {
 	SDL_Event	e;
@@ -100,32 +112,18 @@ void	general_draw(t_all *all, t_points *start)
 					printf("tut444\n");
 				}
 			}
-			// if (e.type == SDL_MOUSEMOTION)
-   //          {
-   //              if (e.motion.xrel < 0)
-   //              {
-   //              	printf("11111\n");
-   //                  all->scale -= 5;
-   //              }
-   //              else if (e.motion.xrel > 0)
-   //              {
-   //                  all->scale += 5;;
-   //              }
-   //              else if (e.motion.yrel < 0)
-   //              {
-   //                  all->scale -= 5;
-   //              }
-   //              else if (e.motion.yrel > 0)
-   //              {
-   //                  all->scale += 5;
-   //              }
-   //          }
-			if (e.type == SDL_MOUSEBUTTONDOWN)
+   			if (e.type == SDL_MOUSEBUTTONDOWN)
 			{
 				if (e.button.button == SDL_BUTTON_LEFT)
 				{
 					SDL_GetMouseState(&x_mouse, &y_mouse);
 					check(x_mouse, y_mouse, all);
+				}
+				if (e.button.button == SDL_BUTTON_RIGHT)
+				{
+					SDL_GetMouseState(&x_mouse, &y_mouse);
+					put_player(x_mouse, y_mouse, all, start);
+					printf("поставить игрока\n");
 				}
 			}
 		}

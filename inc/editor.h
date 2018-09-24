@@ -48,12 +48,14 @@ typedef struct		s_all
 	SDL_Window		*wind;
 	SDL_Renderer	*rend;
 	t_points		*points;
+	t_points		*player;
 	int				w;
 	int				h;
 	int				scale;
 	int				half_step;
 	double			zoom;
 	double			move;
+
 }					t_all;
 
 void				f_close(t_all *all);
