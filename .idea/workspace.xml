@@ -9,13 +9,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="991aa2ea-a332-43a7-868a-fe3cf9c0245f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/editor" beforeDir="false" afterPath="$PROJECT_DIR$/editor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inc/editor.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/editor.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/draw.o" beforeDir="false" afterPath="$PROJECT_DIR$/obj/draw.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/draw.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/draw.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.c" afterDir="false" />
-    </list>
+    <list default="true" id="991aa2ea-a332-43a7-868a-fe3cf9c0245f" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +20,7 @@
     <session id="1747333316">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
@@ -61,8 +56,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main.c">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="630">
-                  <caret line="42" column="1" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
+                <state relative-caret-position="270">
+                  <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
                 </state>
               </provider>
             </entry>
@@ -83,8 +78,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/check_end.c">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="136">
-                  <caret line="69" selection-start-line="69" selection-end-line="69" />
+                <state relative-caret-position="76">
+                  <caret line="65" column="15" lean-forward="true" selection-start-line="65" selection-start-column="15" selection-end-line="65" selection-end-column="15" />
                 </state>
               </provider>
             </entry>
@@ -180,15 +175,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1537787108053</updated>
-      <workItem from="1537787113657" duration="4191000" />
+      <workItem from="1537787113657" duration="4239000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4191000" />
+    <option name="totallyTimeSpent" value="4239000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2560" height="1440" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.07704528" />
@@ -237,13 +233,6 @@
     <entry file="file://$PROJECT_DIR$/src/points.c">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="42" column="1" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/draw.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="712">
@@ -251,10 +240,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/check_end.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="69" selection-start-line="69" selection-end-line="69" />
+        <state relative-caret-position="76">
+          <caret line="65" column="15" lean-forward="true" selection-start-line="65" selection-start-column="15" selection-end-line="65" selection-end-column="15" />
         </state>
       </provider>
     </entry>

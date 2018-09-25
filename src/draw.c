@@ -58,18 +58,18 @@ void	set_render(t_all *all, t_points *start)
 	SDL_RenderPresent(all->rend);
 }
 
-bool on_wall(int x_mouse,int y_mouse,t_all *all)
-{
+// bool on_wall(int x_mouse,int y_mouse,t_all *all)
+// {
 
 
-    return (true);
-}
+//     return (true);
+// }
 
-void    put_player(int x_mouse,int y_mouse,t_all *all, t_points *start)
-{
-    if (on_wall(x_mouse, y_mouse, all, start) == false)
+// void    put_player(int x_mouse,int y_mouse,t_all *all, t_points *start)
+// {
+//     if (on_wall(x_mouse, y_mouse, all, start) == false)
         
-}
+// }
 void	general_draw(t_all *all, t_points *start)
 {
 	SDL_Event	e;
@@ -122,7 +122,7 @@ void	general_draw(t_all *all, t_points *start)
 				if (e.button.button == SDL_BUTTON_RIGHT)
 				{
 					SDL_GetMouseState(&x_mouse, &y_mouse);
-					put_player(x_mouse, y_mouse, all, start);
+					// put_player(x_mouse, y_mouse, all, start);
 					printf("поставить игрока\n");
 				}
 			}
