@@ -12,26 +12,6 @@
 
 #include "editor.h"
 
-void	diag_r_l(t_all *all, t_points *tmp)
-{
-	int i;
-	int j;
-
-	i = 1;
-	tmp = all->points->next;
-	j = all->h;
-	while (j--)
-		all->points = all->points->next;
-	while (all->points)
-	{
-		if (i % all->h != 0)
-			all->points->diag2 = tmp;
-		all->points = all->points->next;
-		tmp = tmp->next;
-		i++;
-	}
-}
-
 void	diag_l_r(t_all *all)
 {
 	t_points	*head;
@@ -52,8 +32,6 @@ void	diag_l_r(t_all *all)
 		}
 		all->points = all->points->next;
 	}
-	all->points = head;
-	diag_r_l(all, tmp);
 	all->points = head;
 }
 

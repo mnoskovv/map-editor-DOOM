@@ -73,7 +73,7 @@ HDR_FLAGS := -I $(LIBFT_INC) -I $(INC_DIR) -I ~/.brew/include/SDL2/
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(OBJ) $(HDR_FLAGS) -o $(NAME) $(LIBFT) $(SDL_LIB) -D_THREAD_SAFE -fsanitize=address
+	$(CC) $(OBJ) $(HDR_FLAGS) -o $(NAME) $(LIBFT) $(SDL_LIB) -D_THREAD_SAFE
 
 $(OBJ): | $(OBJ_DIR)
 

@@ -23,11 +23,9 @@ t_points	*new_elem(void)
 	node->end_right = NULL;
 	node->end_down = NULL;
 	node->end_diag1 = NULL;
-	node->end_diag2 = NULL;
 	node->right = NULL;
 	node->down = NULL;
 	node->diag1 = NULL;
-	node->diag2 = NULL;
 	node->next = NULL;
 	return (node);
 }
