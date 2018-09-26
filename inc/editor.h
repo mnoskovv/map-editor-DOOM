@@ -75,4 +75,5 @@ void				general_draw(t_all *all, t_points *start);
 void				set_render(t_all *all, t_points *start);
 void				work(t_all *all, t_points *start);
 
+
 #endif
