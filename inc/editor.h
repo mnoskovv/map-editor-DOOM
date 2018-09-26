@@ -28,6 +28,14 @@
 # define CHECK_DIAG1 2
 # define CHECK_DIAG2 3
 
+typedef struct		s_rects
+{
+	SDL_Rect 		sdl_rect;
+	int 			index;
+	// int index y;
+	struct s_rects	*next;
+}					t_rects;
+
 typedef struct		s_points
 {
 	int				x;
