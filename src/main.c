@@ -44,12 +44,12 @@ char **load_dogs(int w, int h)
 	return (dogs);
 }
 
-t_rect	new_rect(int x, int y, int index)
+t_rect	*new_rect(t_all *all,int x, int y, int index)
 {
 	t_rect *rectangle;
 	SDL_Rect sdl_rect;
 
-	if (!(rectangle = malloc(sizeof(t_rect))))
+	if (!(rectangle = (t_rect *)malloc(sizeof(t_rect))))
 		return (NULL);
 	sdl_rect.x = x;
 	sdl_rect.y = y;
@@ -64,13 +64,16 @@ t_rect	new_rect(int x, int y, int index)
 
 void create_list_rects(t_all *all) // тут надо подумать о правильном создании листа квадратов
 {
-	t_rect *rect = NULL;
-	int 	index = 0;
+	// t_rect *rect;
+	// t_rect *start = NULL;
+	// int 	index = 0;
 
 	while (all->points->next)
 	{
 		if (all->points->right && all->points->down && all->points->diag1)
 		{
+			all->rects = new_rect(all ,all->points->x, all->points->y, 0);
+			all->rects = all->rects->next;
 			// тут типа если все точки остальные есть, то можно сделать из нее квадрат
 			// и обяззательно связать эту ноду, что создалать и будующую, если она будет, а если нет, то NULL
 
@@ -123,16 +126,16 @@ int	main(int argc, char **argv)
 	create_list_rects(all);
 	all->points = start;
 	// SDL_Rect r;
- //    r.x = all->points->x;
- //    r.y = all->points->y;
- //    r.w = all->half_step * 2;
- //    r.h = all->half_step * 2;
+ 	//    r.x = all->points->x;
+ 	//    r.y = all->points->y;
+ 	//    r.w = all->half_step * 2;
+ 	//    r.h = all->half_step * 2;
 
- //    SDL_Rect r2;
- //    r2.x = all->points->next->x;
- //    r2.y = all->points->next->y;
- //    r2.w = all->half_step * 2;
- //    r2.h = all->half_step * 2;
+	//    SDL_Rect r2;
+	//    r2.x = all->points->next->x;
+	//    r2.y = all->points->next->y;
+	//    r2.w = all->half_step * 2;
+	//    r2.h = all->half_step * 2;
 
 	while (!quit)
 	{
