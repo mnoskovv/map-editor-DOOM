@@ -62,6 +62,7 @@ typedef struct		s_all
 	SDL_Renderer	*rend;
 	t_points		*points;
 	t_rect			*rects;
+	t_rect			*r_start;
 	int				w;
 	int				h;
 	int				scale;

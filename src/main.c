@@ -44,58 +44,75 @@ char **load_dogs(int w, int h)
 	return (dogs);
 }
 
-t_rect	*new_rect(t_all *all,int x, int y, int index)
+t_rect	*new_rect()
 {
 	t_rect *rectangle;
 	SDL_Rect sdl_rect;
 
 	if (!(rectangle = (t_rect *)malloc(sizeof(t_rect))))
 		return (NULL);
-	sdl_rect.x = x;
-	sdl_rect.y = y;
-	sdl_rect.w = all->half_step * 2;
-	sdl_rect.h = all->half_step * 2;
+	sdl_rect.x = 0;
+	sdl_rect.y = 0;
+	sdl_rect.w = 0;
+	sdl_rect.h = 0;
 	rectangle->sdl_rect = sdl_rect;
-	rectangle->index = index;
-
+	rectangle->index = 0;
 	rectangle->next = NULL;
 	return (rectangle); 
 }
 
+
+void	put_rect(t_all *all,int x, int y, int index)
+{
+	all->rects->sdl_rect.x = x;
+	all->rects->sdl_rect.y = y;
+	all->rects->sdl_rect.w = all->half_step * 2;
+	all->rects->sdl_rect.h = all->half_step * 2;
+	all->rects->index = index;
+}
+
 void create_list_rects(t_all *all) // тут надо подумать о правильном создании листа квадратов
 {
-	// t_rect *rect;
-	t_rect *rect_start;
+	int 	index = 0;
+	t_rect	*start;
 
-	rect_start = all->rects;
-	// int 	index = 0;
-	while (all->points->next)
+	start = all->rects;
+	while (all->points)
 	{
 		if (all->points->right && all->points->down && all->points->diag1)
 		{
-			all->rects = new_rect(all ,all->points->x, all->points->y, 0);
-			all->rects = all->rects->next;
-			// тут типа если все точки остальные есть, то можно сделать из нее квадрат
-			// и обяззательно связать эту ноду, что создалать и будующую, если она будет, а если нет, то NULL
-
-			//  а этом месте нужно считать индекс по идее. Чтобы его можно было потом передавать. Но я не знаю 
-			// пока как его считать, надо придумать, или сделать 2 индекса, по Х и по У
+			put_rect(all ,all->points->x, all->points->y, index);
+			// printf("x = %d y = %d\n", all->rects->sdl_rect.x, all->rects->sdl_rect.y);
+			index++;
+			if (all->points->next->right && all->points->next->down && all->points->next->diag1)
+				all->rects->next = new_rect();
+			else	
+				all->rects->next = NULL;
+			if (all->rects->next)
+				all->rects = all->rects->next;
 		}
 		all->points = all->points->next;
 	}
-	all->rects = rect_start;
+	all->rects = start;
+
+	while (all->rects)
+	{
+			printf("x = %d y = %d\n", all->rects->sdl_rect.x, all->rects->sdl_rect.y);
+			all->rects = all->rects->next;
+	}
+	printf("k = %d\n", index);
+	
 }
 int	main(int argc, char **argv)
 {
 	t_all		*all;
 	t_points	*start;
-	t_rect		*rect_start;
 	SDL_Event	e;
 	bool		quit;
 	int			x_mouse;
 	int			y_mouse;
 	char 		**dogs;
- 	t_rect		*rects = NULL; // создать под него структуру и закинуть эту структуру в all
+ 	//t_rect		*rects = NULL; // создать под него структуру и закинуть эту структуру в all
 
 	quit = false;
 	x_mouse = 0;
@@ -105,6 +122,9 @@ int	main(int argc, char **argv)
 	if (!(all = (t_all *)malloc(sizeof(t_all))))
 		return (0);
 	all->points = new_elem();
+	all->rects = new_rect();
+
+	all->r_start = NULL;
 	init_sdl(all);
 	all->w = ft_atoi(argv[1]) + 1;
 	all->h = ft_atoi(argv[2]) + 1;
@@ -113,11 +133,11 @@ int	main(int argc, char **argv)
 		exit_error(2);
 	if (!(dogs = load_dogs(all->w - 1, all->h - 1)))
 		return (0);
+
 	for (int i = 0; i < all->h - 1; i++)
 	{
 		printf("%s\n", dogs[i]);
 	}
-	all->rects = rects;
 	all->scale = (all->w > all->h) ? SCR_H / all->w : SCR_H / all->h;
 	all->half_step = (all->scale ) / 2;
 	all->zoom = 1;
@@ -127,14 +147,13 @@ int	main(int argc, char **argv)
 	neighbors(all);
 	all->points = start;
 	create_list_rects(all);
-	rect_start = all->rects;
 	all->points = start;
 
-	while (all->rects)
-	{
-		printf("x = %d y = %d\n", all->rects->sdl_rect.x, all->rects->sdl_rect.y);
-		all->rects = all->rects->next;
-	}
+	// while (all->rects)
+	// {
+	// 	printf("x = %d y = %d\n", all->rects->sdl_rect.x, all->rects->sdl_rect.y);
+	// 	all->rects = all->rects->next;
+	// }
 	// SDL_Rect r;
  	//    r.x = all->points->x;
  	//    r.y = all->points->y;

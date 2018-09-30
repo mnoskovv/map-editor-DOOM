@@ -15,6 +15,7 @@
 int check(int x_mouse,int y_mouse, t_all *all, int half_step)
 {
 	printf("click\n");
+	printf("x click = %d y click = %d\n", x_mouse, y_mouse );
 	t_points *start;
 
 	start = all->points;
