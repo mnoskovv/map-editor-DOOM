@@ -65,9 +65,10 @@ t_rect	*new_rect(t_all *all,int x, int y, int index)
 void create_list_rects(t_all *all) // тут надо подумать о правильном создании листа квадратов
 {
 	// t_rect *rect;
-	// t_rect *start = NULL;
-	// int 	index = 0;
+	t_rect *rect_start;
 
+	rect_start = all->rects;
+	// int 	index = 0;
 	while (all->points->next)
 	{
 		if (all->points->right && all->points->down && all->points->diag1)
@@ -82,11 +83,13 @@ void create_list_rects(t_all *all) // тут надо подумать о пра
 		}
 		all->points = all->points->next;
 	}
+	all->rects = rect_start;
 }
 int	main(int argc, char **argv)
 {
 	t_all		*all;
 	t_points	*start;
+	t_rect		*rect_start;
 	SDL_Event	e;
 	bool		quit;
 	int			x_mouse;
@@ -124,7 +127,14 @@ int	main(int argc, char **argv)
 	neighbors(all);
 	all->points = start;
 	create_list_rects(all);
+	rect_start = all->rects;
 	all->points = start;
+
+	while (all->rects)
+	{
+		printf("x = %d y = %d\n", all->rects->sdl_rect.x, all->rects->sdl_rect.y);
+		all->rects = all->rects->next;
+	}
 	// SDL_Rect r;
  	//    r.x = all->points->x;
  	//    r.y = all->points->y;

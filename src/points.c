@@ -39,7 +39,7 @@ void		put_coords(t_all *all, int x, int y)
 void		create_list1(t_all *all)
 {
 	int			x;
-	int y;
+	int			y;
 	int			iterations;
 	t_points	*start;
 

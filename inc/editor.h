@@ -13,13 +13,21 @@
 #ifndef EDITOR_H
 # define EDITOR_H
 
-# include <SDL.h>
-# include <SDL_image.h>
+# include <SDL2/SDL.h>
+# include <SDL2/SDL_image.h>
 # include "libft.h"
 # include "stdbool.h"
 # include <stdlib.h>
 # include <math.h>
 # include <fcntl.h>
+
+// # include <SDL.h>
+// # include <SDL_image.h>
+// # include "libft.h"
+// # include "stdbool.h"
+// # include <stdlib.h>
+// # include <math.h>
+// # include <fcntl.h>
 
 # define SCR_W 640
 # define SCR_H 640
