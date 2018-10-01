@@ -13,21 +13,21 @@
 #ifndef EDITOR_H
 # define EDITOR_H
 
-# include <SDL2/SDL.h>
-# include <SDL2/SDL_image.h>
-# include "libft.h"
-# include "stdbool.h"
-# include <stdlib.h>
-# include <math.h>
-# include <fcntl.h>
-
-// # include <SDL.h>
-// # include <SDL_image.h>
+// # include <SDL2/SDL.h>
+// # include <SDL2/SDL_image.h>
 // # include "libft.h"
 // # include "stdbool.h"
 // # include <stdlib.h>
 // # include <math.h>
 // # include <fcntl.h>
+
+# include <SDL.h>
+# include <SDL_image.h>
+# include "libft.h"
+# include "stdbool.h"
+# include <stdlib.h>
+# include <math.h>
+# include <fcntl.h>
 
 # define SCR_W 640
 # define SCR_H 640
@@ -40,6 +40,7 @@ typedef struct		s_rect
 {
 	SDL_Rect 		sdl_rect;
 	int 			index;
+	int				on_screen;
 	struct s_rect	*next;
 }					t_rect;
 
@@ -77,6 +78,7 @@ void				neighbors(t_all *all);
 void				diag_l_r(t_all *all);
 void				draw(t_all *all, int x, int y);
 int 				check(int x_mouse,int y_mouse, t_all *all, int half_step);
+int 				check_r(int x_mouse,int y_mouse, t_all *all, int half_step);
 t_points			*new_elem(void);
 void				exit_error(int n);
 void				init_sdl(t_all *all);

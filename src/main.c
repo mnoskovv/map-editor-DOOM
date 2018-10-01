@@ -35,7 +35,7 @@ char **load_dogs(int w, int h)
 		while (x < w)
 		{
 			
-			dogs[y][x] = '@';
+			dogs[y][x] = ' ';
 			x++;
 		}
 		dogs[y][x] = '\0';
@@ -57,6 +57,7 @@ t_rect	*new_rect()
 	sdl_rect.h = 0;
 	rectangle->sdl_rect = sdl_rect;
 	rectangle->index = 0;
+	rectangle->on_screen = 0;
 	rectangle->next = NULL;
 	return (rectangle); 
 }
@@ -79,34 +80,35 @@ void create_list_rects(t_all *all) // тут надо подумать о пра
 	start = all->rects;
 	while (all->points)
 	{
-		if (all->points->right && all->points->down && all->points->diag1)
+		if (all->points->right && all->points->down && all->points->diag1 && index++ < (all->w - 1) * (all->h - 1))
 		{
 			put_rect(all ,all->points->x, all->points->y, index);
-			// printf("x = %d y = %d\n", all->rects->sdl_rect.x, all->rects->sdl_rect.y);
-			index++;
-			if (all->points->next->right && all->points->next->down && all->points->next->diag1)
+			if (index < (all->w - 1) * (all->h - 1))
+			{
 				all->rects->next = new_rect();
-			else	
-				all->rects->next = NULL;
-			if (all->rects->next)
 				all->rects = all->rects->next;
+			}
 		}
 		all->points = all->points->next;
 	}
+	all->rects->next = NULL;
 	all->rects = start;
 
-	while (all->rects)
-	{
-			printf("x = %d y = %d\n", all->rects->sdl_rect.x, all->rects->sdl_rect.y);
-			all->rects = all->rects->next;
-	}
-	printf("k = %d\n", index);
+	// while (all->rects)
+	// {
+	// 		// index++;
+	// 		printf("x = %d y = %d\n", all->rects->sdl_rect.x, all->rects->sdl_rect.y);
+	// 		all->rects = all->rects->next;
+	// }
+
+	// printf("k = %d\n", index);
 	
 }
 int	main(int argc, char **argv)
 {
 	t_all		*all;
 	t_points	*start;
+	t_rect		*start_r;
 	SDL_Event	e;
 	bool		quit;
 	int			x_mouse;
@@ -123,8 +125,7 @@ int	main(int argc, char **argv)
 		return (0);
 	all->points = new_elem();
 	all->rects = new_rect();
-
-	all->r_start = NULL;
+	start_r = all->rects;
 	init_sdl(all);
 	all->w = ft_atoi(argv[1]) + 1;
 	all->h = ft_atoi(argv[2]) + 1;
@@ -197,7 +198,8 @@ int	main(int argc, char **argv)
 				if (e.button.button == SDL_BUTTON_LEFT)
 				{
 					SDL_GetMouseState(&x_mouse, &y_mouse);
-					check(x_mouse, y_mouse, all, all->half_step);
+					// check(x_mouse, y_mouse, all, all->half_step);
+					check_r(x_mouse, y_mouse, all, all->half_step);
 				}
 			}
 		}
@@ -218,10 +220,28 @@ int	main(int argc, char **argv)
 					all->points->end_diag1->x * all->zoom, all->points->end_diag1->y * all->zoom);
 			all->points = all->points->next;
 		}
-		// SDL_SetRenderDrawColor(all->rend, 0, 0, 255, 255 );
-  //  		SDL_RenderFillRect( all->rend, &r );
-  //  		SDL_RenderFillRect( all->rend, &r2 );
 		all->points = start;
+
+		while (all->rects)
+		{
+			if (all->rects->on_screen == 1)
+			{
+				SDL_Rect r;
+ 	   			r.x = all->rects->sdl_rect.x;
+ 	   			r.y = all->rects->sdl_rect.y;
+ 	   			r.w = all->half_step * 2;
+ 	   			r.h = all->half_step * 2;
+ 	   			
+ 	   			SDL_SetRenderDrawColor(all->rend, 0, 0, 255, 255 );
+				SDL_RenderFillRect( all->rend, &r );
+			}
+			all->rects = all->rects->next;
+		}
+		all->rects = start_r;
+	//	SDL_SetRenderDrawColor(all->rend, 0, 0, 255, 255 );
+  	//	SDL_RenderFillRect( all->rend, &r );
+  	//	SDL_RenderFillRect( all->rend, &r2 );
+
 		SDL_RenderPresent(all->rend);
 	}
 	f_close(all);

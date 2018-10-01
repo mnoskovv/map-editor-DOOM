@@ -61,3 +61,34 @@ int check(int x_mouse,int y_mouse, t_all *all, int half_step)
 	all->points = start;
 	return  (0);
 }
+
+int check_r(int x_mouse,int y_mouse, t_all *all, int half_step)
+{
+	printf("click\n");
+	printf("x click = %d y click = %d\n", x_mouse, y_mouse );
+	t_rect *start;
+	
+	start = all->rects;
+	while (all->rects)
+	{
+		if (y_mouse > all->rects->sdl_rect.y  && y_mouse <= all->rects->sdl_rect.y + (half_step * 2) 
+			&& x_mouse > all->rects->sdl_rect.x  && x_mouse <= all->rects->sdl_rect.x + (half_step * 2))
+		{
+				if (all->rects->on_screen == 0)
+				{
+					printf("switched on 1\n");
+					all->rects->on_screen = 1;
+				}
+				else
+				{
+					printf("switched on 0\n");
+					all->rects->on_screen = 0;
+				}
+				all->rects = start;
+				return (1);
+		}
+		all->rects = all->rects->next;
+	}
+	all->rects = start;
+	return  (0);
+}
