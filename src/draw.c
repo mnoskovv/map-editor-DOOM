@@ -15,13 +15,13 @@
 void	draw(t_all *all, int x, int y)
 {
 	// SDL_RenderDrawPoint(all->rend, (x * all->zoom) , (y * all->zoom));
-	SDL_RenderDrawPoint(all->rend, (x * all->zoom) + 1, (y * all->zoom) + 1);
-	SDL_RenderDrawPoint(all->rend, (x * all->zoom) + 1, (y * all->zoom));
-	SDL_RenderDrawPoint(all->rend, (x * all->zoom) + 1, (y * all->zoom) - 1);
-	SDL_RenderDrawPoint(all->rend, (x * all->zoom), (y * all->zoom) + 1);
-	SDL_RenderDrawPoint(all->rend, (x * all->zoom), (y * all->zoom) - 1);
-	SDL_RenderDrawPoint(all->rend, (x * all->zoom), (y * all->zoom));
-	SDL_RenderDrawPoint(all->rend, (x * all->zoom) - 1, (y * all->zoom) + 1);
-	SDL_RenderDrawPoint(all->rend, (x * all->zoom) - 1, (y * all->zoom));
-	SDL_RenderDrawPoint(all->rend, (x * all->zoom) - 1, (y * all->zoom) - 1);
+	SDL_RenderDrawPoint(all->rend, x + 1, y + 1);
+	SDL_RenderDrawPoint(all->rend, x + 1, y);
+	SDL_RenderDrawPoint(all->rend, x + 1, y - 1);
+	SDL_RenderDrawPoint(all->rend, x, y + 1);
+	SDL_RenderDrawPoint(all->rend, x, y - 1);
+	SDL_RenderDrawPoint(all->rend, x, y);
+	SDL_RenderDrawPoint(all->rend, x - 1, y + 1);
+	SDL_RenderDrawPoint(all->rend, x - 1, y);
+	SDL_RenderDrawPoint(all->rend, x - 1, y - 1);
 }

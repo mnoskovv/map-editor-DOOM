@@ -84,6 +84,7 @@ int check_r(int x_mouse,int y_mouse, t_all *all, int half_step)
 				{
 					printf("switched on 0\n");
 					all->rects->on_screen = 0;
+					all->dogs[all->rects->y][all->rects->x] = ' ';
 				}
 				all->rects = start;
 				return (1);

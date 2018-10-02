@@ -13,21 +13,21 @@
 #ifndef EDITOR_H
 # define EDITOR_H
 
-# include <SDL2/SDL.h>
-# include <SDL2/SDL_image.h>
-# include "libft.h"
-# include "stdbool.h"
-# include <stdlib.h>
-# include <math.h>
-# include <fcntl.h>
-
-// # include <SDL.h>
-// # include <SDL_image.h>
+// # include <SDL2/SDL.h>
+// # include <SDL2/SDL_image.h>
 // # include "libft.h"
 // # include "stdbool.h"
 // # include <stdlib.h>
 // # include <math.h>
 // # include <fcntl.h>
+
+# include <SDL.h>
+# include <SDL_image.h>
+# include "libft.h"
+# include "stdbool.h"
+# include <stdlib.h>
+# include <math.h>
+# include <fcntl.h>
 
 # define SCR_W 640
 # define SCR_H 640
@@ -71,8 +71,10 @@ typedef struct		s_all
 	int				h;
 	int				scale;
 	int				half_step;
-	double			zoom;
-	double			move;
+	int				fd;
+	int				r;
+	int				g;
+	int				b;
 }					t_all;
 
 void				f_close(t_all *all);
@@ -88,6 +90,5 @@ void				init_sdl(t_all *all);
 void				general_draw(t_all *all, t_points *start);
 void				set_render(t_all *all, t_points *start);
 void				work(t_all *all, t_points *start);
-
 
 #endif

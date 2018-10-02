@@ -29,5 +29,9 @@ void	exit_error(int n)
 		ft_putstr("SDL couldn't initialize! SDL Error: ");
 		ft_putendl(SDL_GetError());
 	}
+	else if (n == 4)
+	{
+		ft_putendl("Error! File does not open!");
+	}
 	exit(0);
 }

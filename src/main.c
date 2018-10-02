@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "editor.h"
+
 char **load_dogs(int w, int h)
 {
 	char **dogs;
@@ -46,8 +47,8 @@ char **load_dogs(int w, int h)
 
 t_rect	*new_rect()
 {
-	t_rect *rectangle;
-	SDL_Rect sdl_rect;
+	t_rect		*rectangle;
+	SDL_Rect	sdl_rect;
 
 	if (!(rectangle = (t_rect *)malloc(sizeof(t_rect))))
 		return (NULL);
@@ -75,12 +76,14 @@ void	put_rect(t_all *all,int x, int y, int ix, int iy)
 
 void create_list_rects(t_all *all) // тут надо подумать о правильном создании листа квадратов
 {
-	int 	index = 0;
-
-	int		iy = -1;
-	int		ix = 0;
 	t_rect	*start;
-
+	int 	index;
+	int		iy;
+	int		ix;
+	
+	i = 0;
+	iy = -1;
+	ix = -1;
 	start = all->rects;
 	while (all->points)
 	{
@@ -114,13 +117,19 @@ void create_list_rects(t_all *all) // тут надо подумать о пра
 	// printf("k = %d\n", index);
 	
 }
+
 void write_map(t_all *all)
 {
-	for (int i = 0; i < all->h - 1; i++)
+	int i;
+
+	i = -1;
+	while (++i < all->h - 1)
 	{
-		printf("%s\n", all->dogs[i]);
+		ft_putendl_fd(all->dogs[i], all->fd);
+		printf("%s\n", all->dogs[i]); // DELETEEEE	
 	}
 }
+
 int	main(int argc, char **argv)
 {
 	t_all		*all;
@@ -135,10 +144,12 @@ int	main(int argc, char **argv)
 	quit = false;
 	x_mouse = 0;
 	y_mouse = 0;
-	if (argc != 3)
+	if (argc != 4)
 		exit_error(1);
 	if (!(all = (t_all *)malloc(sizeof(t_all))))
 		return (0);
+	if ((all->fd = open(argv[3], O_RDWR)) == -1)
+		exit_error(4);
 	all->points = new_elem();
 	all->rects = new_rect();
 	start_r = all->rects;
@@ -153,8 +164,9 @@ int	main(int argc, char **argv)
 	all->dogs = dogs;
 	all->scale = (all->w > all->h) ? SCR_H / all->w : SCR_H / all->h;
 	all->half_step = (all->scale ) / 2;
-	all->zoom = 1;
-	all->move = 0;
+	all->r = 0;
+	all->g = 102;
+	all->b = 0;
 	create_list_points(all);
 	start = all->points;
 	neighbors(all);
@@ -167,26 +179,15 @@ int	main(int argc, char **argv)
 		{
 			if (e.type == SDL_QUIT || e.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
 				quit = true;
-			if (e.key.keysym.scancode == SDL_SCANCODE_P)
-				write_map(all);
-			if (e.key.keysym.scancode == SDL_SCANCODE_D) // return in default position
-				all->zoom = 1;
-			if (e.type == SDL_MOUSEWHEEL)
+			else if (e.type == SDL_KEYDOWN)
 			{
-				if (e.wheel.y > 0)
-					all->zoom *= 1.1;
-				else if (e.wheel.y < 0 && all->zoom > 0.2)
+				if (e.key.keysym.sym == SDLK_p)
+					write_map(all);
+				if (e.key.keysym.sym == SDLK_q)
 				{
-					all->zoom /= 1.1;
-				}
-				if (e.wheel.x > 0)
-				{
-					all->zoom *= 1.1;
-				}
-				else if (e.wheel.x < 0)
-				{
-					all->zoom /= 1.1;
-			
+					all->r = 179;
+					all->g = 0;
+					all->b = 0;
 				}
 			}
 			if (e.type == SDL_MOUSEBUTTONDOWN)
@@ -205,18 +206,17 @@ int	main(int argc, char **argv)
 		{
 			draw(all, all->points->x, all->points->y);
 			if (all->points->end_right)
-				SDL_RenderDrawLine(all->rend, all->points->x * all->zoom, all->points->y * all->zoom,
-					all->points->end_right->x * all->zoom, all->points->end_right->y * all->zoom);
+				SDL_RenderDrawLine(all->rend, all->points->x, all->points->y,
+					all->points->end_right->x, all->points->end_right->y);
 			if (all->points->end_down)
-				SDL_RenderDrawLine(all->rend, all->points->x * all->zoom, all->points->y * all->zoom,
-					all->points->end_down->x * all->zoom, all->points->end_down->y * all->zoom);
+				SDL_RenderDrawLine(all->rend, all->points->x, all->points->y,
+					all->points->end_down->x, all->points->end_down->y);
 			if (all->points->end_diag1)
-				SDL_RenderDrawLine(all->rend, all->points->x * all->zoom, all->points->y * all->zoom,
-					all->points->end_diag1->x * all->zoom, all->points->end_diag1->y * all->zoom);
+				SDL_RenderDrawLine(all->rend, all->points->x, all->points->y,
+					all->points->end_diag1->x, all->points->end_diag1->y);
 			all->points = all->points->next;
 		}
 		all->points = start;
-
 		while (all->rects)
 		{
 			if (all->rects->on_screen == 1)
@@ -226,9 +226,8 @@ int	main(int argc, char **argv)
  	   			r.y = all->rects->sdl_rect.y;
  	   			r.w = all->half_step * 2;
  	   			r.h = all->half_step * 2;
- 	   			
- 	   			SDL_SetRenderDrawColor(all->rend, 0, 0, 255, 255 );
-				SDL_RenderFillRect( all->rend, &r );
+ 	   			SDL_SetRenderDrawColor(all->rend, all->r, all->g, all->b, 0);
+ 	   			SDL_RenderFillRect(all->rend, &r);
 			}
 			all->rects = all->rects->next;
 		}
