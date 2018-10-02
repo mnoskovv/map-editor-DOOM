@@ -63,18 +63,22 @@ t_rect	*new_rect()
 }
 
 
-void	put_rect(t_all *all,int x, int y, int index)
+void	put_rect(t_all *all,int x, int y, int ix, int iy)
 {
 	all->rects->sdl_rect.x = x;
 	all->rects->sdl_rect.y = y;
 	all->rects->sdl_rect.w = all->half_step * 2;
 	all->rects->sdl_rect.h = all->half_step * 2;
-	all->rects->index = index;
+	all->rects->x = ix;
+	all->rects->y = iy;
 }
 
 void create_list_rects(t_all *all) // тут надо подумать о правильном создании листа квадратов
 {
 	int 	index = 0;
+
+	int		iy = -1;
+	int		ix = 0;
 	t_rect	*start;
 
 	start = all->rects;
@@ -82,7 +86,13 @@ void create_list_rects(t_all *all) // тут надо подумать о пра
 	{
 		if (all->points->right && all->points->down && all->points->diag1 && index++ < (all->w - 1) * (all->h - 1))
 		{
-			put_rect(all ,all->points->x, all->points->y, index);
+			if (++iy == all->h - 1)
+			{
+				if (iy == all->h - 1)
+					ix++;
+				iy = 0;
+			}
+			put_rect(all ,all->points->x, all->points->y, ix, iy);
 			if (index < (all->w - 1) * (all->h - 1))
 			{
 				all->rects->next = new_rect();
@@ -94,15 +104,22 @@ void create_list_rects(t_all *all) // тут надо подумать о пра
 	all->rects->next = NULL;
 	all->rects = start;
 
-	// while (all->rects)
-	// {
-	// 		// index++;
-	// 		printf("x = %d y = %d\n", all->rects->sdl_rect.x, all->rects->sdl_rect.y);
-	// 		all->rects = all->rects->next;
-	// }
+	while (all->rects)
+	{
+			// index++;
+			printf("x = %d y = %d ix = %d iy = %d\n", all->rects->sdl_rect.x, all->rects->sdl_rect.y, all->rects->x, all->rects->y);
+			all->rects = all->rects->next;
+	}
 
 	// printf("k = %d\n", index);
 	
+}
+void write_map(t_all *all)
+{
+	for (int i = 0; i < all->h - 1; i++)
+	{
+		printf("%s\n", all->dogs[i]);
+	}
 }
 int	main(int argc, char **argv)
 {
@@ -114,7 +131,6 @@ int	main(int argc, char **argv)
 	int			x_mouse;
 	int			y_mouse;
 	char 		**dogs;
- 	//t_rect		*rects = NULL; // создать под него структуру и закинуть эту структуру в all
 
 	quit = false;
 	x_mouse = 0;
@@ -134,11 +150,7 @@ int	main(int argc, char **argv)
 		exit_error(2);
 	if (!(dogs = load_dogs(all->w - 1, all->h - 1)))
 		return (0);
-
-	for (int i = 0; i < all->h - 1; i++)
-	{
-		printf("%s\n", dogs[i]);
-	}
+	all->dogs = dogs;
 	all->scale = (all->w > all->h) ? SCR_H / all->w : SCR_H / all->h;
 	all->half_step = (all->scale ) / 2;
 	all->zoom = 1;
@@ -149,30 +161,14 @@ int	main(int argc, char **argv)
 	all->points = start;
 	create_list_rects(all);
 	all->points = start;
-
-	// while (all->rects)
-	// {
-	// 	printf("x = %d y = %d\n", all->rects->sdl_rect.x, all->rects->sdl_rect.y);
-	// 	all->rects = all->rects->next;
-	// }
-	// SDL_Rect r;
- 	//    r.x = all->points->x;
- 	//    r.y = all->points->y;
- 	//    r.w = all->half_step * 2;
- 	//    r.h = all->half_step * 2;
-
-	//    SDL_Rect r2;
-	//    r2.x = all->points->next->x;
-	//    r2.y = all->points->next->y;
-	//    r2.w = all->half_step * 2;
-	//    r2.h = all->half_step * 2;
-
 	while (!quit)
 	{
 		while (SDL_PollEvent(&e) != 0)
 		{
 			if (e.type == SDL_QUIT || e.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
 				quit = true;
+			if (e.key.keysym.scancode == SDL_SCANCODE_P)
+				write_map(all);
 			if (e.key.keysym.scancode == SDL_SCANCODE_D) // return in default position
 				all->zoom = 1;
 			if (e.type == SDL_MOUSEWHEEL)
@@ -198,7 +194,6 @@ int	main(int argc, char **argv)
 				if (e.button.button == SDL_BUTTON_LEFT)
 				{
 					SDL_GetMouseState(&x_mouse, &y_mouse);
-					// check(x_mouse, y_mouse, all, all->half_step);
 					check_r(x_mouse, y_mouse, all, all->half_step);
 				}
 			}
@@ -238,10 +233,6 @@ int	main(int argc, char **argv)
 			all->rects = all->rects->next;
 		}
 		all->rects = start_r;
-	//	SDL_SetRenderDrawColor(all->rend, 0, 0, 255, 255 );
-  	//	SDL_RenderFillRect( all->rend, &r );
-  	//	SDL_RenderFillRect( all->rend, &r2 );
-
 		SDL_RenderPresent(all->rend);
 	}
 	f_close(all);
