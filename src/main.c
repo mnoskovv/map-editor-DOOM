@@ -81,7 +81,7 @@ void create_list_rects(t_all *all) // тут надо подумать о пра
 	int		iy;
 	int		ix;
 	
-	i = 0;
+	index = 0;
 	iy = -1;
 	ix = -1;
 	start = all->rects;
@@ -153,7 +153,21 @@ int	main(int argc, char **argv)
 	all->points = new_elem();
 	all->rects = new_rect();
 	start_r = all->rects;
-	init_sdl(all);
+
+
+	init_sdl(all);							//
+	IMG_Init(IMG_INIT_PNG);					//
+	SDL_Texture* texture = NULL;			//
+    SDL_Surface* temp = IMG_Load("/Users/nikitanoskov/Desktop/test/a.png");	//
+    texture = SDL_CreateTextureFromSurface(all->rend, temp);//
+    SDL_FreeSurface(temp);//
+    SDL_Rect menu;
+    menu.x = SCR_W - 200; //Extreme left of the window
+    menu.y = 0; //Very bottom of the window
+    menu.w = 200; //100 pixels width
+    menu.h = 600; //100 pixels height
+
+
 	all->w = ft_atoi(argv[1]) + 1;
 	all->h = ft_atoi(argv[2]) + 1;
 	if (!all->w || !all->h || all->h > 100 || all->w > 100  // обратить внимание на 3х3 +1 
@@ -199,7 +213,7 @@ int	main(int argc, char **argv)
 				}
 			}
 		}
-		SDL_SetRenderDrawColor(all->rend, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_SetRenderDrawColor(all->rend, 0xbd, 0xbd, 0xbd, 0xbd);
 		SDL_RenderClear(all->rend);
 		SDL_SetRenderDrawColor(all->rend, 0x00, 0x00, 0x00, 0x00);
 		while (all->points)
@@ -232,8 +246,12 @@ int	main(int argc, char **argv)
 			all->rects = all->rects->next;
 		}
 		all->rects = start_r;
+		SDL_RenderCopy(all->rend, texture, NULL, &menu);
 		SDL_RenderPresent(all->rend);
 	}
+	 SDL_DestroyTexture(texture);
+	     IMG_Quit();
 	f_close(all);
+
 	return (1);
 }
