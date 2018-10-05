@@ -13,23 +13,23 @@
 #ifndef EDITOR_H
 # define EDITOR_H
 
-// # include <SDL2/SDL.h>
-// # include <SDL2/SDL_image.h>
-// # include "libft.h"
-// # include "stdbool.h"
-// # include <stdlib.h>
-// # include <math.h>
-// # include <fcntl.h>
-
-# include <SDL.h>
-# include <SDL_image.h>
+# include <SDL2/SDL.h>
+# include <SDL2/SDL_image.h>
 # include "libft.h"
 # include "stdbool.h"
 # include <stdlib.h>
 # include <math.h>
 # include <fcntl.h>
 
-# define SCR_W 640
+// # include <SDL.h>
+// # include <SDL_image.h>
+// # include "libft.h"
+// # include "stdbool.h"
+// # include <stdlib.h>
+// # include <math.h>
+// # include <fcntl.h>
+
+# define SCR_W 840
 # define SCR_H 640
 # define CHECK_RIGHT 0
 # define CHECK_LEFT 1

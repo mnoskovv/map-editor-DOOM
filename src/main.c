@@ -176,7 +176,7 @@ int	main(int argc, char **argv)
 	if (!(dogs = load_dogs(all->w - 1, all->h - 1)))
 		return (0);
 	all->dogs = dogs;
-	all->scale = (all->w > all->h) ? SCR_H / all->w : SCR_H / all->h;
+	all->scale = (all->w > all->h) ? SCR_W - 200 / all->w : SCR_H / all->h;
 	all->half_step = (all->scale ) / 2;
 	all->r = 0;
 	all->g = 102;
