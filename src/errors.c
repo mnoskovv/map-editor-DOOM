@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aziabkin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aziabkin <aziabkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 17:46:41 by aziabkin          #+#    #+#             */
-/*   Updated: 2018/09/20 17:46:45 by aziabkin         ###   ########.fr       */
+/*   Updated: 2018/10/04 19:56:26 by aziabkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ void	exit_error(int n)
 	{
 		ft_putstr("Two arguments required!:");
 		ft_putendl(" ./editor arg_1 > 4 && < 100 arg_2 > 4 && < 100");
+		ft_putstr("maps/[map name]\n");
 	}
 	else if (n == 2)
 	{
 		ft_putstr("Wrong size!:");
 		ft_putendl(" ./editor arg_1 > 4 && < 100 arg_2 > 4 && < 100");
+		ft_putstr("maps/[map name]\n");
 	}
 	else if (n == 3)
 	{

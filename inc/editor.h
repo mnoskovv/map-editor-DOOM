@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aziabkin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aziabkin <aziabkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 17:38:40 by aziabkin          #+#    #+#             */
-/*   Updated: 2018/09/20 17:38:43 by aziabkin         ###   ########.fr       */
+/*   Updated: 2018/10/04 19:30:02 by aziabkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 // # include <math.h>
 // # include <fcntl.h>
 
-# define SCR_W 840
-# define SCR_H 640
+# define SCR_W 1200
+# define SCR_H 1000
 # define CHECK_RIGHT 0
 # define CHECK_LEFT 1
 # define CHECK_DIAG1 2
@@ -39,10 +39,14 @@
 typedef struct		s_rect
 {
 	SDL_Rect 		sdl_rect;
-	int x;
-	int y;
+	int				x;
+	int				y;
+	int				r;
+	int				g;
+	int				b;
 	int 			index;
 	int				on_screen;
+	int				is_player;
 	struct s_rect	*next;
 }					t_rect;
 
@@ -66,6 +70,7 @@ typedef struct		s_all
 	t_points		*points;
 	t_rect			*rects;
 	t_rect			*r_start;
+	t_rect			*sdl_player;
 	char			**dogs;
 	int				w;
 	int				h;
@@ -75,6 +80,7 @@ typedef struct		s_all
 	int				r;
 	int				g;
 	int				b;
+	char			bukva;
 }					t_all;
 
 void				f_close(t_all *all);
@@ -90,5 +96,9 @@ void				init_sdl(t_all *all);
 void				general_draw(t_all *all, t_points *start);
 void				set_render(t_all *all, t_points *start);
 void				work(t_all *all, t_points *start);
+void				color_rects(int x_mouse,int y_mouse, t_all *all);
+void				write_map(t_all *all);
+int					pos_player(int x_mouse,int y_mouse, t_all *all, int half_step);
+t_rect	*new_rect();
 
 #endif

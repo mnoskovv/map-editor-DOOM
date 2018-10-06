@@ -3,14 +3,128 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aziabkin <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aziabkin <aziabkin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 17:47:45 by aziabkin          #+#    #+#             */
-/*   Updated: 2018/09/20 17:47:46 by aziabkin         ###   ########.fr       */
+/*   Updated: 2018/10/04 20:02:08 by aziabkin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "editor.h"
+
+void write_map(t_all *all)
+{
+	int i;
+
+	i = -1;
+	while (++i < all->h - 1)
+	{
+		ft_putendl_fd(all->dogs[i], all->fd);
+		printf("%s\n", all->dogs[i]); // DELETEEEE	
+	}
+}
+
+// while (all->rects)
+// 	{
+// 		if (y_mouse > all->rects->sdl_rect.y  && y_mouse <= all->rects->sdl_rect.y + (half_step * 2) 
+// 			&& x_mouse > all->rects->sdl_rect.x  && x_mouse <= all->rects->sdl_rect.x + (half_step * 2))
+// 		{
+// 				if (all->rects->on_screen == 0)
+// 				{
+// 					printf("switched on 1\n");
+// 					all->rects->on_screen = 1;
+// 					all->rects->r = all->r;
+// 					all->rects->g = all->g;
+// 					all->rects->b = all->b;
+// 					all->dogs[all->rects->y][all->rects->x] = all->bukva;
+// 				}
+// 				else
+// 				{
+// 					printf("switched on 0\n");
+// 					all->rects->on_screen = 0;
+// 					all->dogs[all->rects->y][all->rects->x] = ' ';
+// 				}
+// 				all->rects = start;
+// 				return (1);
+// 		}
+// 		all->rects = all->rects->next;
+// 	}
+
+
+void	color_rects(int x_mouse, int y_mouse, t_all *all)
+{
+		if (y_mouse >= 33 && y_mouse <= 111 && x_mouse >= 965  && x_mouse <= 1004)
+		{
+			all->r = 0;
+			all->g = 0;
+			all->b = 0;
+			all->bukva = 'Q';
+		}
+		if (y_mouse >= 33 && y_mouse <= 112 && x_mouse >= 1008  && x_mouse <= 1045)
+		{
+			all->r = 59;
+			all->g = 101;
+			all->b = 97;
+			all->bukva = 'W';
+		}
+		if (y_mouse >= 33 && y_mouse <= 112 && x_mouse >= 1051  && x_mouse <= 1093)
+		{
+			all->r = 131;
+			all->g = 54;
+			all->b = 102;
+			all->bukva = 'E';
+		}
+		if (y_mouse >= 33 && y_mouse <= 112 && x_mouse >= 1096  && x_mouse <= 1139)
+		{
+			all->r = 32;
+			all->g = 164;
+			all->b = 164;
+			all->bukva = 'R';
+		}
+		if (y_mouse >= 33 && y_mouse <= 112 && x_mouse >= 1143  && x_mouse <= 1184)
+		{
+			all->r = 63;
+			all->g = 45;
+			all->b = 33;
+			all->bukva = 'T';
+		}
+
+		if (y_mouse >= 114 && y_mouse <= 187 && x_mouse >= 965  && x_mouse <= 1004)
+		{
+			all->r = 122;
+			all->g = 86;
+			all->b = 51;
+			all->bukva = 'Y';
+		}
+		if (y_mouse >= 114 && y_mouse <= 187 && x_mouse >= 1008  && x_mouse <= 1045)
+		{
+			all->r = 188;
+			all->g = 31;
+			all->b = 31;
+			all->bukva = 'U';
+		}
+		if (y_mouse >= 114 && y_mouse <= 187 && x_mouse >= 1051  && x_mouse <= 1093)
+		{
+			all->r = 30;
+			all->g = 19;
+			all->b = 104;
+			all->bukva = 'I';
+		}
+		if (y_mouse >= 114 && y_mouse <= 187 && x_mouse >= 1096  && x_mouse <= 1139)
+		{
+			all->r = 93;
+			all->g = 93;
+			all->b = 95;
+			all->bukva = 'O';
+		}
+		if (y_mouse >= 114 && y_mouse <= 187 && x_mouse >= 1143  && x_mouse <= 1184)
+		{
+			all->r = 253;
+			all->g = 127;
+			all->b = 0;
+			all->bukva = 'A';
+		}
+}
 
 char **load_dogs(int w, int h)
 {
@@ -56,8 +170,14 @@ t_rect	*new_rect()
 	sdl_rect.y = 0;
 	sdl_rect.w = 0;
 	sdl_rect.h = 0;
+	rectangle->r = 255;
+	rectangle->g = 0;
+	rectangle->b = 255;
+	rectangle->x = 0;
+	rectangle->y = 0;
 	rectangle->sdl_rect = sdl_rect;
 	rectangle->index = 0;
+	rectangle->is_player = 0;
 	rectangle->on_screen = 0;
 	rectangle->next = NULL;
 	return (rectangle); 
@@ -109,25 +229,17 @@ void create_list_rects(t_all *all) // тут надо подумать о пра
 
 	while (all->rects)
 	{
-			// index++;
 			printf("x = %d y = %d ix = %d iy = %d\n", all->rects->sdl_rect.x, all->rects->sdl_rect.y, all->rects->x, all->rects->y);
 			all->rects = all->rects->next;
 	}
-
-	// printf("k = %d\n", index);
-	
 }
 
-void write_map(t_all *all)
+void	valid_file(char *argv)
 {
-	int i;
-
-	i = -1;
-	while (++i < all->h - 1)
-	{
-		ft_putendl_fd(all->dogs[i], all->fd);
-		printf("%s\n", all->dogs[i]); // DELETEEEE	
-	}
+	if (ft_strstr(argv, "/dev/"))
+		exit_error(5);
+	if (!ft_strstr(argv, "maps/"))
+		exit_error(5);
 }
 
 int	main(int argc, char **argv)
@@ -150,59 +262,59 @@ int	main(int argc, char **argv)
 		return (0);
 	if ((all->fd = open(argv[3], O_RDWR)) == -1)
 		exit_error(4);
+	valid_file(argv[3]);
 	all->points = new_elem();
 	all->rects = new_rect();
 	start_r = all->rects;
 
-
-	init_sdl(all);							//
-	IMG_Init(IMG_INIT_PNG);					//
-	SDL_Texture* texture = NULL;			//
-    SDL_Surface* temp = IMG_Load("/Users/nikitanoskov/Desktop/test/a.png");	//
+	init_sdl(all);
+	IMG_Init(IMG_INIT_PNG);
+	SDL_Texture* texture = NULL;
+	SDL_Surface* temp = IMG_Load("/Users/nikitanoskov/Desktop/map-editor-DOOM_p/walls.png");	//
     texture = SDL_CreateTextureFromSurface(all->rend, temp);//
     SDL_FreeSurface(temp);//
     SDL_Rect menu;
-    menu.x = SCR_W - 200; //Extreme left of the window
+    menu.x = SCR_W - 250; //Extreme left of the window
     menu.y = 0; //Very bottom of the window
-    menu.w = 200; //100 pixels width
-    menu.h = 600; //100 pixels height
-
+    menu.w = 250; //100 pixels width
+    menu.h = 1000; //100 pixels height
 
 	all->w = ft_atoi(argv[1]) + 1;
 	all->h = ft_atoi(argv[2]) + 1;
-	if (!all->w || !all->h || all->h > 100 || all->w > 100  // обратить внимание на 3х3 +1 
-							|| all->h < 4 || all->w < 4)	//
+	if (!all->w || !all->h || all->h > 101 || all->w > 101
+							|| all->h < 5 || all->w < 5)
 		exit_error(2);
 	if (!(dogs = load_dogs(all->w - 1, all->h - 1)))
 		return (0);
 	all->dogs = dogs;
-	all->scale = (all->w > all->h) ? SCR_W - 200 / all->w : SCR_H / all->h;
+	all->scale = (all->w > all->h) ? (SCR_W - 300) / all->w : (SCR_H - 50) / all->h;
 	all->half_step = (all->scale ) / 2;
 	all->r = 0;
-	all->g = 102;
+	all->g = 0;
 	all->b = 0;
+	all->bukva = 'Q';
 	create_list_points(all);
 	start = all->points;
 	neighbors(all);
 	all->points = start;
 	create_list_rects(all);
 	all->points = start;
+	all->sdl_player = NULL;
 	while (!quit)
 	{
 		while (SDL_PollEvent(&e) != 0)
 		{
 			if (e.type == SDL_QUIT || e.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
 				quit = true;
+			else if (e.type == SDL_MOUSEBUTTONDOWN)
+			{
+				SDL_GetMouseState(&x_mouse, &y_mouse);
+				color_rects(x_mouse, y_mouse, all);
+			}
 			else if (e.type == SDL_KEYDOWN)
 			{
-				if (e.key.keysym.sym == SDLK_p)
+				if (e.key.keysym.sym == SDLK_KP_ENTER)
 					write_map(all);
-				if (e.key.keysym.sym == SDLK_q)
-				{
-					all->r = 179;
-					all->g = 0;
-					all->b = 0;
-				}
 			}
 			if (e.type == SDL_MOUSEBUTTONDOWN)
 			{
@@ -211,9 +323,14 @@ int	main(int argc, char **argv)
 					SDL_GetMouseState(&x_mouse, &y_mouse);
 					check_r(x_mouse, y_mouse, all, all->half_step);
 				}
+				if (e.button.button == SDL_BUTTON_RIGHT)
+				{
+					SDL_GetMouseState(&x_mouse, &y_mouse);
+					pos_player(x_mouse, y_mouse, all, all->half_step);
+				}
 			}
 		}
-		SDL_SetRenderDrawColor(all->rend, 0xbd, 0xbd, 0xbd, 0xbd);
+		SDL_SetRenderDrawColor(all->rend, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(all->rend);
 		SDL_SetRenderDrawColor(all->rend, 0x00, 0x00, 0x00, 0x00);
 		while (all->points)
@@ -240,18 +357,31 @@ int	main(int argc, char **argv)
  	   			r.y = all->rects->sdl_rect.y;
  	   			r.w = all->half_step * 2;
  	   			r.h = all->half_step * 2;
- 	   			SDL_SetRenderDrawColor(all->rend, all->r, all->g, all->b, 0);
+ 	   			SDL_SetRenderDrawColor(all->rend, all->rects->r, all->rects->g, all->rects->b, 0);
  	   			SDL_RenderFillRect(all->rend, &r);
 			}
 			all->rects = all->rects->next;
 		}
 		all->rects = start_r;
+		// all->rects->r = 255;
+					// all->rects->g = 232;
+					// all->rects->b = 80;
+		if (all->sdl_player != NULL)
+		{
+			SDL_Rect r;
+
+			SDL_SetRenderDrawColor(all->rend, 255, 232, 80, 0);
+			r.x = all->sdl_player->x;
+ 	   		r.y = all->sdl_player->y;
+ 	   		r.w =  (all->half_step * 2) * 0.8 ;
+ 	   		r.h = (all->half_step * 2) * 0.8;
+			SDL_RenderFillRect(all->rend, &r);
+		}
 		SDL_RenderCopy(all->rend, texture, NULL, &menu);
 		SDL_RenderPresent(all->rend);
 	}
-	 SDL_DestroyTexture(texture);
-	     IMG_Quit();
+	SDL_DestroyTexture(texture);
+	IMG_Quit();
 	f_close(all);
-
 	return (1);
 }
