@@ -22,7 +22,7 @@ void	init_sdl(t_all *all)
 	all->wind = window;
 	all->rend = renderer;
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
-		exit_error(3);
+		exit_error(2);
 	all->wind = SDL_CreateWindow("Map Editor for Doom Nukem",
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		SCR_W, SCR_H, SDL_WINDOW_SHOWN);

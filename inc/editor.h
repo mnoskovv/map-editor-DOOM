@@ -13,21 +13,21 @@
 #ifndef EDITOR_H
 # define EDITOR_H
 
-# include <SDL2/SDL.h>
-# include <SDL2/SDL_image.h>
-# include "libft.h"
-# include "stdbool.h"
-# include <stdlib.h>
-# include <math.h>
-# include <fcntl.h>
-
-// # include <SDL.h>
-// # include <SDL_image.h>
+// # include <SDL2/SDL.h>
+// # include <SDL2/SDL_image.h>
 // # include "libft.h"
 // # include "stdbool.h"
 // # include <stdlib.h>
 // # include <math.h>
 // # include <fcntl.h>
+
+# include <SDL.h>
+# include <SDL_image.h>
+# include "libft.h"
+# include "stdbool.h"
+# include <stdlib.h>
+# include <math.h>
+# include <fcntl.h>
 
 # define SCR_W 1200
 # define SCR_H 1000
@@ -81,6 +81,7 @@ typedef struct		s_all
 	int				g;
 	int				b;
 	char			bukva;
+	int				max_strlen;
 }					t_all;
 
 void				f_close(t_all *all);
@@ -96,9 +97,9 @@ void				init_sdl(t_all *all);
 void				general_draw(t_all *all, t_points *start);
 void				set_render(t_all *all, t_points *start);
 void				work(t_all *all, t_points *start);
-void				color_rects(int x_mouse,int y_mouse, t_all *all);
+void				color_rects(int x_mouse, int y_mouse, t_all *all);
 void				write_map(t_all *all);
-int					pos_player(int x_mouse,int y_mouse, t_all *all, int half_step);
-t_rect	*new_rect();
+int					pos_player(int x_mouse, int y_mouse, t_all *all, int half_step);
+t_rect				*new_rect();
 
 #endif

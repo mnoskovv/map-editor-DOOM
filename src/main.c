@@ -237,9 +237,9 @@ void create_list_rects(t_all *all) // тут надо подумать о пра
 void	valid_file(char *argv)
 {
 	if (ft_strstr(argv, "/dev/"))
-		exit_error(5);
+		exit_error(1);
 	if (!ft_strstr(argv, "maps/"))
-		exit_error(5);
+		exit_error(1);
 }
 
 int	main(int argc, char **argv)
@@ -252,25 +252,49 @@ int	main(int argc, char **argv)
 	int			x_mouse;
 	int			y_mouse;
 	char 		**dogs;
+	char		*str;
+	int			tmp_len;
+	int			max_len;
 
+	tmp_len = 0;
+	max_len = 0;
+	str = NULL;
 	quit = false;
 	x_mouse = 0;
 	y_mouse = 0;
-	if (argc != 4)
+	if (argc != 2)
 		exit_error(1);
 	if (!(all = (t_all *)malloc(sizeof(t_all))))
 		return (0);
-	if ((all->fd = open(argv[3], O_RDWR)) == -1)
-		exit_error(4);
-	valid_file(argv[3]);
+	if ((all->fd = open(argv[1], O_RDWR)) == -1)
+		exit_error(3);
+	valid_file(argv[1]);
+	if (get_next_line(all->fd, &str) == 0)
+	{
+		printf("Empty str\n"); //
+		all->w = 51;
+		all->h = 51;
+	}
+	else
+	{
+		printf("File doent empty\n"); //
+		while (get_next_line(all->fd, &str) > 0)
+		{
+			tmp_len = ft_strlen(str);
+			ft_strdel(&str);
+			if (tmp_len > max_len)
+				max_len = tmp_len;
+		}
+		all->max_strlen = max_len;
+		printf("%i\n", all->max_strlen);
+	}
 	all->points = new_elem();
 	all->rects = new_rect();
 	start_r = all->rects;
-
 	init_sdl(all);
 	IMG_Init(IMG_INIT_PNG);
 	SDL_Texture* texture = NULL;
-	SDL_Surface* temp = IMG_Load("/Users/nikitanoskov/Desktop/map-editor-DOOM_p/walls.png");	//
+	SDL_Surface* temp = IMG_Load("../map-editor-DOOM/walls.png");	//
     texture = SDL_CreateTextureFromSurface(all->rend, temp);//
     SDL_FreeSurface(temp);//
     SDL_Rect menu;
@@ -279,11 +303,11 @@ int	main(int argc, char **argv)
     menu.w = 250; //100 pixels width
     menu.h = 1000; //100 pixels height
 
-	all->w = ft_atoi(argv[1]) + 1;
-	all->h = ft_atoi(argv[2]) + 1;
-	if (!all->w || !all->h || all->h > 101 || all->w > 101
-							|| all->h < 5 || all->w < 5)
-		exit_error(2);
+	// all->w = ft_atoi(argv[1]) + 1;
+	// all->h = ft_atoi(argv[2]) + 1;
+	// if (!all->w || !all->h || all->h > 101 || all->w > 101
+	// 						|| all->h < 5 || all->w < 5)
+	// 	exit_error(2);
 	if (!(dogs = load_dogs(all->w - 1, all->h - 1)))
 		return (0);
 	all->dogs = dogs;
@@ -314,7 +338,11 @@ int	main(int argc, char **argv)
 			else if (e.type == SDL_KEYDOWN)
 			{
 				if (e.key.keysym.sym == SDLK_KP_ENTER)
+				{	
+					close(all->fd);
+					all->fd = open(argv[1], O_RDWR);
 					write_map(all);
+				}
 			}
 			if (e.type == SDL_MOUSEBUTTONDOWN)
 			{
@@ -363,9 +391,6 @@ int	main(int argc, char **argv)
 			all->rects = all->rects->next;
 		}
 		all->rects = start_r;
-		// all->rects->r = 255;
-					// all->rects->g = 232;
-					// all->rects->b = 80;
 		if (all->sdl_player != NULL)
 		{
 			SDL_Rect r;
