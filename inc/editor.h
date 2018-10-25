@@ -13,17 +13,6 @@
 #ifndef EDITOR_H
 # define EDITOR_H
 
-<<<<<<< HEAD
-=======
-// # include <SDL2/SDL.h>
-// # include <SDL2/SDL_image.h>
-// # include "libft.h"
-// # include "stdbool.h"
-// # include <stdlib.h>
-// # include <math.h>
-// # include <fcntl.h>
-
->>>>>>> d899ab428c1d5715194fb996b51bb7256a2607f7
 # include <SDL.h>
 # include <SDL_image.h>
 # include "libft.h"
@@ -90,13 +79,9 @@ typedef struct		s_all
 	int				g;
 	int				b;
 	char			bukva;
-<<<<<<< HEAD
 	int				tmp_len;
 	int				emptyness_flag;
 	bool			quit;
-=======
-	int				max_strlen;
->>>>>>> d899ab428c1d5715194fb996b51bb7256a2607f7
 }					t_all;
 
 void				f_close(t_all *all);
@@ -111,7 +96,6 @@ void				init_sdl(t_all *all);
 void				set_render(t_all *all, t_points *start);
 void				work(t_all *all, t_points *start);
 void				color_rects(int x_mouse, int y_mouse, t_all *all);
-<<<<<<< HEAD
 void				write_map(t_all *all);
 int					pos_player(int x_mouse, int y_mouse, t_all *all, int h_st);
 t_rect				*new_rect(void);
@@ -166,10 +150,5 @@ void				color_sprites_5(int x_mouse, int y_mouse, t_all *all);
 void				color_sprites_6(int x_mouse, int y_mouse, t_all *all);
 void				create_list_rects_1(t_all *all, int *ix, int *iy, int *ind);
 void				create_list1(t_all *all);
-=======
-void				write_map(t_all *all);
-int					pos_player(int x_mouse, int y_mouse, t_all *all, int half_step);
-t_rect				*new_rect();
->>>>>>> d899ab428c1d5715194fb996b51bb7256a2607f7
 
 #endif
