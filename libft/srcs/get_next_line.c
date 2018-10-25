@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static int		i_nl(char **str)
+int				i_nl(char **str)
 {
 	int			index;
 
@@ -22,7 +22,7 @@ static int		i_nl(char **str)
 	return (index);
 }
 
-static int		is_written(char **mem, char **line)
+int				is_written(char **mem, char **line)
 {
 	int			index;
 	char		*trash;
@@ -36,7 +36,8 @@ static int		is_written(char **mem, char **line)
 		free(trash);
 		return (1);
 	}
-	*line = ft_strsub(*mem, 0, index);
+	else
+		*line = ft_strsub(*mem, 0, index);
 	*mem = ft_strsub(*mem, index + 1, ft_strlen(*mem) - index);
 	free(trash);
 	return (ft_strlen(*line) > 0 ? 1 : 0);

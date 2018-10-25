@@ -36,10 +36,30 @@ void		put_coords(t_all *all, int x, int y)
 	all->points->y = y;
 }
 
+void		create_list2(int x, int *iterations, t_all *all)
+{
+	int y;
+
+	y = 0;
+	while (y < all->h * all->scale)
+	{
+		(*iterations)++;
+		put_coords(all, x + 20, y + 20);
+		if (*iterations == all->w * (all->h + 1))
+		{
+			all->points->next = NULL;
+			break ;
+		}
+		else
+			all->points->next = new_elem();
+		all->points = all->points->next;
+		y += (all->scale);
+	}
+}
+
 void		create_list1(t_all *all)
 {
 	int			x;
-	int			y;
 	int			iterations;
 	t_points	*start;
 
@@ -49,32 +69,8 @@ void		create_list1(t_all *all)
 	while (x < all->w * all->scale)
 	{
 		iterations++;
-		y = 0;
-		while (y < all->h * all->scale)
-		{
-			(iterations)++;
-			put_coords(all, x + 20, y + 20);
-			if (iterations == all->w * (all->h + 1))
-			{
-				all->points->next = NULL;
-				break ;
-			}
-			else
-				all->points->next = new_elem();
-			all->points = all->points->next;
-			y += (all->scale);
-		}
+		create_list2(x, &iterations, all);
 		x += (all->scale);
 	}
 	all->points = start;
-}
-
-void		create_list_points(t_all *all)
-{
-	t_points	*first;
-	t_points	*begin;
-
-	first = new_elem();
-	begin = first;
-	create_list1(all);
 }
